@@ -3,7 +3,7 @@
 
 worker_processes ENV['WORKER_PROCESSES'].to_i
 listen ENV['LISTEN_ON']
-timeout 30
+# timeout 30
 preload_app true
 GC.respond_to?(:copy_on_write_friendly=) && GC.copy_on_write_friendly = true
 
