@@ -10,14 +10,14 @@ blocks:
       jobs:
         - name: Build drkiq
           commands:
-            - 'docker pull $DOCKER_USERNAME/dockerizing-ruby-drkiq:latest || true'
-            - 'docker build -t $DOCKER_USERNAME/dockerizing-ruby-drkiq:latest --cache-from=$DOCKER_USERNAME/dockerizing-ruby-drkiq:latest -f Dockerfile.production .'
-            - 'docker push $DOCKER_USERNAME/dockerizing-ruby-drkiq:latest'
+            - 'docker pull $DOCKER_USERNAME/dockerizing-rails:latest || true'
+            - 'docker build -t $DOCKER_USERNAME/dockerizing-rails:latest --cache-from=$DOCKER_USERNAME/dockerizing-rails:latest -f Dockerfile.production .'
+            - 'docker push $DOCKER_USERNAME/dockerizing-rails:latest'
         - name: Build nginx
           commands:
-            - 'docker pull $DOCKER_USERNAME/dockerizing-ruby-nginx:latest || true'
-            - 'docker build -t $DOCKER_USERNAME/dockerizing-ruby-nginx:latest --cache-from=$DOCKER_USERNAME/dockerizing-ruby-nginx:latest -f Dockerfile.nginx .'
-            - 'docker push $DOCKER_USERNAME/dockerizing-ruby-nginx:latest'
+            - 'docker pull $DOCKER_USERNAME/dockerizing-rails:latest || true'
+            - 'docker build -t $DOCKER_USERNAME/dockerizing-rails:latest --cache-from=$DOCKER_USERNAME/dockerizing-rails:latest -f Dockerfile.nginx .'
+            - 'docker push $DOCKER_USERNAME/dockerizing-rails:latest'
       secrets:
         - name: dockerhub
       prologue:
@@ -34,7 +34,7 @@ blocks:
           - cp env-example .env
           - cat docker-compose.test.yml | envsubst | tee docker-compose.yml
           - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
-          - 'docker pull $DOCKER_USERNAME/dockerizing-ruby-drkiq:latest || true'
+          - 'docker pull $DOCKER_USERNAME/dockerizing-rails:latest || true'
           - 'docker-compose run drkiq rake db:reset'
           - 'docker-compose run drkiq rake db:migrate'
           - 'docker-compose run drkiq rake db:test:prepare'
