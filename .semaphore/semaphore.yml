@@ -42,3 +42,6 @@ blocks:
           commands:
             - 'docker-compose run drkiq rake db:test:prepare'
             - docker-compose run drkiq rails test
+      env_vars:
+        - name: DATABASE_URL
+          value: 'postgresql://drkiq:test_db_password@postgres:5432/drkiq?encoding=utf8&pool=5&timeout=5000'
